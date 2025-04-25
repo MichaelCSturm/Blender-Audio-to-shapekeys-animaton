@@ -1,0 +1,41 @@
+
+
+WHEELS / MODULES
+
+        IN powershell use
+        pip download <package name> --dest ./wheels --only-binary=:all: -python-version=<version> --platform=<platform>
+        THEN update the blender_manifest.toml wheels section
+        if the command pip doesnt work try pip3. If that doesnt work reinstall python and enable global environmental variables.
+        MAKE SURE license is allowed for use. I would use SpeechRecognition as an addon with google pinging but we can't have nice things
+
+https://docs.blender.org/api/current/info_best_practice.html
+
+PRINT STATMENTS
+
+        Try not to use them PLEASE log.
+        Its hell trying to read a console full of 40 different printstatements along the line of "this is working"
+
+GRABING PANEL PROPS:
+        Set up a variable in a class and have whenver the update function called update that variable.
+
+SETTING PANEL PROPS:
+        Use something like this: bpy.context.scene.my_custom_props.Output = text
+        takes the property group pointer and sets the actual data to whatever you want. BE SURE ITS THE RIGHT TYPE THO
+
+USING CONTEXT OVERRIDES. USE THE TEMPARY ONES LIKE. OLD VERISONS ARE DEPRECATED FROM 3.0
+       
+            kwargs = {
+                'window': win,
+                'screen': scr,
+                'area'  : assets[0],
+                'region': region[0],
+                'scene' : bpy.context.scene,
+            }
+            with bpy.context.temp_override(**kwargs):
+                bpy.ops.poselib.blend_pose_asset(
+                    
+                    blend_factor=blend_factor,
+                    flipped=False)
+        
+HOW BLENDER STORES blend_pose_asset
+        bpy.data.actions["Armature.003"]

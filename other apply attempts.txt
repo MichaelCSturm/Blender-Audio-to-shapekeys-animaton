@@ -1,0 +1,94 @@
+#bpy.context.area.type = 'DOPESHEET_EDITOR'
+        # armature.animation_data.action = bpy.data.actions[0]
+        # action =  armature.animation_data.action
+
+        
+        # props = bpy.data.actions
+        # bpy.data.actions
+        # key_interpolation = "linear"
+        # for src_curve in action.fcurves:
+        #         #print("src_curve.data_path ", src_curve.data_path, src_curve.array_index)
+                
+        #         if src_curve.is_empty:
+        #             logging.debug(src_curve, "empy")
+        #             continue
+
+        #         tgt_curve = pose.fcurves.find(src_curve.data_path, index = src_curve.array_index)
+        #         if not tgt_curve:
+        #             tgt_curve = pose.fcurves.new(src_curve.data_path, index = src_curve.array_index)
+        #             if src_curve.group:
+        #                 tgt_curve.group = pose.groups[src_curve.group.name]
+                
+        #         frame_range = action.curve_frame_range
+        #         #print("range ", range)
+        #         for src_kf in src_curve.keyframe_points:
+
+        #             tgt_kf = tgt_curve.keyframe_points.insert(frame = (src_kf.co[0] - frame_range[0] + 0), value = src_kf.co[1])
+                    
+        #             tgt_kf.interpolation = src_kf.interpolation
+        #             if key_interpolation == "constant":
+        #                 tgt_kf.interpolation = 'CONSTANT'
+        #             elif key_interpolation == "linear":
+        #                 tgt_kf.interpolation = 'LINEAR'
+        #             elif key_interpolation == "bezier":
+        #                 tgt_kf.interpolation = 'BEZIER'
+                        
+        #             tgt_kf.easing = src_kf.easing
+        #             tgt_kf.handle_left = src_kf.handle_left
+        #             tgt_kf.handle_right = src_kf.handle_right
+        #             tgt_kf.period = src_kf.period
+
+
+
+
+
+
+
+        #apply(obj=obj, pose_name="googa")
+        #pose
+        #apply_pose(0,blend_factor=1)
+        #bone_names = [b.name for b in bpy.context.selected_pose_bones]
+        # fcurves = pose.fcurves
+        # for src_curve in pose.fcurves:
+        #     logging.debug(src_curve.data_path)
+        #     # try:
+        #     #     src_curve.data_path
+        #     # except:
+        #     #     print('yo ho error')
+        #     for key in src_curve.keyframe_points:
+        #         try:
+        #                 #logging.debug(curve.group.name)
+        #             frame = key.co[0]
+        #             value = key.co[1]
+        #             #logging.debug(f"Frame: {frame}, Value: {value}, left {key.handle_left}, right {key.handle_right}")
+                    
+        #         except IndexError:
+        #                 continue
+        #apply_pose("T-Pose",blend_factor=1)
+
+
+        index = get_pose_index(pose)
+        print(index)
+        try:
+            apply_pose(index,1)
+            add_keyframe(armature,property="location")
+        except:
+            print("Yo wrong area")
+        print(armature)
+        
+        select_object("Armature")
+        
+        ad = armature.animation_data_create()
+        bpy.ops.object.mode_set(mode='OBJECT')
+
+
+
+        for i, keyblock in enumerate(shapekey.key_blocks):
+            if keyblock.name != 'Basis':
+               curr = i - 1
+               if curr != frame:
+                   keyblock.value = 0
+                   keyblock.keyframe_insert("value", frame=frame)
+               else:
+                   keyblock.value = 1
+                   keyblock.keyframe_insert("value", frame=frame)
